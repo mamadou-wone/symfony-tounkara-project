@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payement de la commande ~ La boutique BJB COMPAGNIE!
+{% endblock %}
+
+
+{% block content %}
+	<h2>
+		Mon récapitulatif
+	</h2>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+			<strong>Mon adresse de livraison</strong><br>
+			<div class="form-check mt-4">
+				{{ delivery|raw }}
+			</div>
+
+			<hr>
+			<strong>Mon transporteur</strong>
+			<br>
+			<div class="form-check">
+
+
+				{{carrier.name}}
+				<br>
+				{{carrier.descripion}}
+				<br>
+				{{ ((carrier.price) / 100) | number_format(2, ',','.') }}€
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="text-center">
+				<b>Récap de ma commande</b>
+				<br>
+				<p>Retrouvez le récapitulatif de vos produits</p>
+			</div>
+			<div class="order-summary">
+				{% set  total = null %}
+				{% for key, cart in cart %}
+					<div class="row{% if key> 0 %} mt-2 {% endif %}">
+						<div class="col-2 my-auto">
+							<img src="/uploads/{{ cart.product.illustration }}" alt="{{ cart.product.illustration }}" height="75">
+						</div>
+						<div class="col-8 my-auto">
+							{{ cart.product.name }}
+							<small>
+								{{ cart.product.subtitle }}
+								<br>
+								X
+								{{ cart.quantity }}
+
+							</small>
+						</div>
+						<div class="col-2 my-auto">
+							{{ ((cart.product.price * cart.quantity) / 100) | number_format(2, ',','.') }}
+							€
+						</div>
+					</div>
+					{% set total = total +  (cart.product.price * cart.quantity) %}
+				{% endfor %}
+			</div>
+
+			<hr>
+			<strong>
+				Sous-total:{{ ((total) / 100) | number_format(2, ',','.') }}€</strong>
+
+			<strong>
+				<br>
+				Livraison:
+				{{ (carrier.price/ 100) | number_format(2, ',','.')}}
+
+				€</strong>
+			<hr>
+			<strong>Total:{{ ((total + carrier.price)/100)| number_format(2, ',','.') }}€</strong>
+			<a href="" class="btn btn-success btn-block mt-3">Payer
+				{{ ((total + carrier.price)/100)| number_format(2, ',','.') }}€</a>
+
+		</div>
+	</div>
+{% endblock %}

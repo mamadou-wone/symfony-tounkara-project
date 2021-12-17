@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier ~ La Boutique BJB COMPAGNIE
+{% endblock %}
+
+
+{% block content %}
+	<h1>
+		Mon panier
+	</h1>
+	Retouvez l'ensemble des produits que vous avez ajouté à votre panier.
+	<hr>
+	{% if cartComplet | length > 0 %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Produits</th>
+					<th scope="col"></th>
+					<th scope="col">Quantité</th>
+					<th scope="col">Prix</th>
+					<th scope="col">Total</th>
+					<th scope="col"></th>
+
+
+				</tr>
+			</thead>
+			<tbody>
+				{% set total = null %}
+				{% for cart in cartComplet %}
+					<tr>
+						<td>
+							<img src="/uploads/{{cart.product.illustration }}" alt="{{cart.product.illustration }}" height="75px" ;>
+							<br>
+						</td>
+						<td>
+							{{cart.product.name }}
+							<br>
+							<small>
+								{{cart.product.subtitle }}
+							</small>
+						</td>
+						<td>
+							<a href="{{path('cart_reduire',{'id' : cart.product.id})}}">
+								<img src="{{asset('images/minus-sign.png')}}" alt="supprimer mon produit" height="12px">
+							</a>
+							X{{cart.quantity }}
+							<a href="{{path('cart_add',{'id' : cart.product.id})}}">
+								<img src="{{asset('images/add.png')}}" alt="ajouter un produit" height="12px">
+							</a>
+						</td>
+						<td>{{ (cart.product.price / 100) | number_format(2, ',','.') }}
+							€</td>
+						<td>{{ ((cart.product.price * cart.quantity) / 100) | number_format(2, ',','.') }}
+							€</td>
+						<td>
+							<a href="{{path('cart_remove_by_id',{'id' : cart.product.id})}}">
+
+								<img src="{{asset('images/delete.png')}}" alt="supprimer mon produit" height="30px">
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</tbody>
+			{% set total = total +  (cart.product.price * cart.quantity) %}
+
+		{% endfor %}
+	</tbody>
+</table>
+<div class="text-right mb-5">
+	<b>Nombre de Produits :</b>
+	{{ cartComplet | length}}<br><b>Total de mon panier :</b>
+	{{ ((total) / 100) | number_format(2, ',','.') }}<a href="{{path('order')}}" class="btn btn-success btn-block">Valider mon panier</a>
+</div>{% else %}
+<p>
+	<b>
+		Votre panier est vide.
+	</b>
+</p>{% endif %}{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma commande ~ La Boutique BJB COMPAGNIE
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Ma commande-{{ order.reference }}</h1>
+<hr>
+<strong>Commande passée le :</strong>
+{{ order.createAt|date('d/m/Y') }}<br>
+<strong>Référence de ma commande :</strong>
+<small>{{order.reference}}</small><br>
+<strong>Transporteur choisi :</strong>
+{{order.carriername}}
+<hr>
+<strong>Détails:</strong>
+
+<table class="table mt-4">
+	<thead>
+		<tr>
+
+			<th scope="col">Produit</th>
+			<th scope="col">Quantité(s)</th>
+			<th scope="col">Prix unitaire</th>
+			<th scope="col">Total</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for order in order.orderDetails  %}
+			<tr>
+				<td>
+					<span class="badge badge-secondary">{{order.product}}</span>
+				</td>
+				<td>{{ order.quantity }}</td>
+				<td>{{ (order.price /100)| number_format(2, ',','.')  }}
+					€</td>
+				<td>{{ (order.total /100)| number_format(2, ',','.')  }}
+					€</td>
+			</tr>
+		</td>
+	</tbody>
+</tr></tbody></tbody>{% endfor %}</tbody></table><div class="text-right"><strong>Sous-total:</strong>{{ (order.getTotal /100)| number_format(2, ',','.')  }}€<br><strong>Livraison:</strong>{{ (order.carrierPrice /100)| number_format(2, ',','.')  }}€<br><strong>total:</strong>{{ ((order.carrierPrice + order.getTotal) /100)| number_format(2, ',','.')  }}€<br></div>{% endblock %}

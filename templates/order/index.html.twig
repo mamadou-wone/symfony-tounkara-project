@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valider ma commande ~ La boutique BJB COMPAGNIE!
+{% endblock %}
+
+
+{% block content %}
+	<h2>
+		Je passe ma commande
+	</h2>
+	<p>
+		Choisissez vos préférences avant de passer votre cammande sur La boutique BJB COMPAGNIE
+	</p>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+			{% set formHtml %}
+			{{ form_start(form_order, {action:path('order_recap')}) }}
+			{{form_label(form_order.addresses, 'Choisissez votre adresse de livraison')}}
+			<a href="{{path('account_address_add')}}">Ajouter une nouvelle adresse</a>
+			{{ form_end(form_order) }}
+			{% endset %}
+			{{ formHtml | replace({'[b]' : '<br/>'}) | raw }}
+			<br>
+		</div>
+		<div class="col-md-6">
+			<div class="yexy-center">
+				<b>Récap de ma commande</b>
+				<br>
+				<p>Retrouvez le récapitulatif de vos produits</p>
+			</div>
+			<div class="order-summary">
+				{% for key, cart in cart %}
+
+					<div class="row{% if key> 0 %} mt-2 {% endif %}">
+						<div class="col-2 my-auto">
+							<img src="/uploads/{{ cart.product.illustration }}" alt="{{ cart.product.illustration }}" height="75">
+						</div>
+						<div class="col-8 my-auto">
+							{{ cart.product.name }}
+							<small>
+								{{ cart.product.subtitle }}
+							</small>
+						</div>
+						<div class="col-2 my-auto">
+							X
+							{{ cart.quantity }}
+						</div>
+					</div>
+					<br>
+				{% endfor %}
+			</div>
+
+			<b>Bouton de payer</b>
+		</div>
+	</div>
+{% endblock %}

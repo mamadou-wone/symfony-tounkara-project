@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos produits ~ La Boutique BJB COMPAGNIE
+
+{% endblock %}
+
+{% block content %}
+
+
+	<div class="row">
+		<div class="col-md-3">
+			<h3>Recherche</h3>
+			{{form(form_search)}}
+			</div>
+			<div class="col-md-9">
+				<h3>Nos produits</h3>
+				<div class="row product-container">
+					{% for product in products %}
+						<div class="col-md-3">
+							<div class="product-item text-center">
+								<span class="product-img">
+									<a href="{{path('product',{'slug': product.slug})}}">
+										<img src="/uploads/{{ product.illustration }}" alt="" height="300" width="200">
+									</a>
+								</span>
+								<h5>
+									{{ product.name }}
+								</h5>
+								<span class="product-subtitle">
+									{{ product.subtitle }}
+								</span>
+								<span class="product-price">
+									{{ (product.price / 100) | number_format(2, ',','.') }}
+									fr
+								</span>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+	{% endblock %}

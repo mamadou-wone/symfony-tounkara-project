@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une adresses ~ La Boutique BJB COMPAGNIE
+{% endblock %}
+
+
+{% block content %}
+
+	<a href="" class="btn btn-info btn-sm float-right">Ajouter une adresse</a>
+	<h1>
+		Ajouter une adresse
+	</h1>
+	{{ form_start(form_address) }}
+	<div class="row">
+		<div class="col-md-12">{{ form_row(form_address.name) }}</div>
+		<div class="col-md-6">{{ form_row(form_address.firstname) }}</div>
+		<div class="col-md-6">{{ form_row(form_address.lastname) }}</div>
+		<div class="col-md-6">{{ form_row(form_address.company) }}</div>
+		<div class="col-md-6">{{ form_row(form_address.address) }}</div>
+		<div class="col-md-6">{{ form_row(form_address.country) }}</div>
+		<div class="col-md-6">{{ form_row(form_address.city) }}</div>
+		<div class="col-md-6">{{ form_row(form_address.postal) }}</div>
+		<div class="col-md-6">{{ form_row(form_address.phone) }}</div>
+	</div>
+
+	{{ form_end(form_address) }}
+
+{% endblock %}
